@@ -1,0 +1,238 @@
+{% extends 'main/layout.html'%}
+{% load static %}
+{% block content %}
+    <section>
+      <div class="container my-5">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+          <div class="col">
+<!--                <h4>Example heading <span class="badge bg-secondary">New</span></h4>-->
+                <img src="{% static 'main/img/logo.png' %}" class="img-thumbnail logotip" alt="..." width="100%">
+              </div>
+          
+          <div class="col">
+            <div class="card my-5">
+              <div class="card-body">
+                <h5 class="mb-1 text-center">Главные Новости</h5>
+                <div class="list-group">
+                  {% for five in five_events %}
+                  <a href="{% url 'main:ev' slug=five.slug %}" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h5 class="mb-1">{{five.title_event}}</h5>
+                      <small>{{five.date_event}}</small>
+                    </div>
+                    <p class="mb-1">{{five.brief_announcement}}</p>
+                    <small></small>
+                  </a>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="container my-5">
+          <div class="row row-cols-1 row-cols-md-3 g-3">
+          <div class="col">
+            <div class="card mb-3" style="max-width: 540px; height: 100%;">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  {% for i in events%}
+                  <img src="{{i.illustration_event.url}}" class="img-fluid " alt="..."  width="100%" height="100%">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">Предстоящие соревнования</h5>
+                        <p class="card-text">{{i.date_event}}</p>
+                        <p class="card-text"><small class="text-muted">{{i.title_event}}</small></p>
+                      <a href="{% url 'main:ev' slug=i.slug %}"><button type="button" class="btn btn-primary">Положение</button></a>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card" style="height: 100%;">
+              <div class="card-body">
+                <h5 class="card-title">Календарь соревнований</h5>
+                {% for i in events %}
+                <p class="card-text">Календарь соревнований - планирование событий и участников.</p>
+                {% endfor %}
+                <button type="button" class="btn btn-primary">Подробнее</button>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card"  style="height: 100%;">
+              <div class="card-body">
+                <h5 class="card-title">Архив</h5>
+                <p class="card-text">Хранилище информации о прошлых спортивных соревнованиях</p>
+                <a href="{% url 'event:archive'%}"><button type="button" class="btn btn-primary">Подробнее</button></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="container my-5">
+          <div class="col-12">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    ОБУЧЕНИЕ ОРИЕНТИРОВАНИЮ
+                  </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    {% for i in training_lessons %}
+                    {% if i.category == 'Обучение ориентированию' %}
+                        <p><a href="{% url 'main:tra' slug=i.slug %}">{{i.training_title}}</a></p>
+                    {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    ПОЛЕЗНЫЕ ССЫЛКИ
+                  </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    {% for i in training_lessons%}
+                    {% if i.category == 'Полезные ссылки' %}
+                        <p><a href="{% url 'main:tra' slug=i.slug %}">{{i.training_title}}</a></p>
+                    {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingThree">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    ТРЕНИРУЕМ УМ
+                  </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    {% for i in training_lessons%}
+                    {% if i.category == 'Тренируем ум' %}
+                        <p><a href="{% url 'main:tra' slug=i.slug %}">{{i.training_title}}</a></p>
+                    {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingFour">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                    НОРМАТИВНЫЕ ДОКУМЕНТЫ
+                  </button>
+                </h2>
+                <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    {% for i in training_lessons%}
+                    {% if i.category == 'Нормативные документы' %}
+                        <p><a href="{% url 'main:tra' slug=i.slug %}">{{i.training_title}}</a></p>
+                    {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+<!--              <div class="accordion-item">-->
+<!--                <h2 class="accordion-header" id="flush-headingFive">-->
+<!--                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">-->
+<!--                    СОРЕВНОВАНИЯ-->
+<!--                  </button>-->
+<!--                </h2>-->
+<!--                <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">-->
+<!--                  <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="accordion-item">-->
+<!--                <h2 class="accordion-header" id="flush-headingsix">-->
+<!--                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsesix" aria-expanded="false" aria-controls="flush-collapsesix">-->
+<!--                    АССОЦИАЦИЯ-->
+<!--                  </button>-->
+<!--                </h2>-->
+<!--                <div id="flush-collapsesix" class="accordion-collapse collapse" aria-labelledby="flush-headingsix" data-bs-parent="#accordionFlushExample">-->
+<!--                  <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+          </div>
+        </div>
+        <div class="container">
+          <div class="text-center">
+            <h2>Новости</h2>
+            {% for i in page_obj %}
+          <div class="card text-center my-5">
+            <div class="card-header">
+              {{i.title_event}}
+            </div>
+            <div class="card-body">
+              <h5 class="card-title"><img src="{{i.illustration_event.url}}" alt="Logo" width="70%" height="50%" class="d-inline-block align-text-top"></h5>
+              <p class="card-text">{{i.brief_announcement}}</p>
+              <a href="{% url 'main:ev' slug=i.slug %}" class="btn btn-primary">Подробнее</a>
+            </div>
+            <div class="card-footer text-muted">
+              {{i.date_event}}
+            </div>
+          </div>
+            {% endfor %}
+            <div class="container">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination d-flex justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">&laquo;Первая</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Первая</a></li>
+                     {% endif %}
+                  {% for p in page_obj.paginator.page_range %}
+                    <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                  {% endfor %}
+                    {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Последняя&raquo;</a></li>
+                    {% endif %}
+                </ul>
+              </nav>
+            </div>
+    </section>
+<footer class="bg-dark text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-sm-6 col-12 my-4">
+        <h5>Контакты Федерации</h5>
+        <p>Телефон: 0555555555</p>
+        <p>Эл. почта: kosvetlanov@gmail.com</p>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12 my-4">
+        <h5>Ссылки</h5>
+        <ul class="list-unstyled">
+          <li><a href="{% url 'main:main'%}">Главная</a></li>
+          <li><a href="#">О нас</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 col-12 my-4">
+        <h5>Контактное лицо для связи</h5>
+        <p>Светланов Константин Александрович</p>
+        <p>Эл. почта: kosvetlanov@gmail.com</p>
+      </div>
+    </div>
+    </form>
+  </div>
+  </div>
+  <div class="row">
+      <div class="col-md-12">
+        <hr class="bg-light">
+        <p class="text-center">
+          Федерация Спортивного Ориентирования Кыргызской Республики
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% extends 'main/layout.html'%}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+		<div class="card">
+			<div class="card-body">
+				<h2 class="card-title">{{ orientation_training.category }}</h2>
+				<h3 class="card-subtitle mb-2">{{ orientation_training.training_title }}</h3>
+				<p class="card-text">{{ orientation_training.summary_training }}</p>
+				{% if orientation_training.graphic_illustrations %}
+					<img class="card-img-top" src="{{ orientation_training.graphic_illustrations.url }}" alt="{{ orientation_training.training_title }}">
+				{% endif %}
+				{% if orientation_training.video_training %}
+					<video class="card-img-top" controls autoplay preload="metadata">
+						<source src="{{ orientation_training.video_training.url }}" type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+				{% endif %}
+				<p class="card-text">{{ orientation_training.full_training }}</p>
+				{% if orientation_training.links_training %}
+					<a href="{{ orientation_training.links_training }}" class="card-link">Links Training</a>
+				{% endif %}
+				<p class="card-text"><small class="text-muted">{{ orientation_training.date_of_publication }}</small></p>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+{% endblock %}

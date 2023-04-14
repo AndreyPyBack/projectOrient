@@ -1,0 +1,41 @@
+{% extends 'users/base_page.html'%}
+{% block content %}
+<html>
+<body>
+<div class="container">
+
+      <h1>Редактор событий</h1>
+
+  <h2>Создание события</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" name="create">Создать</button>
+  </form>
+
+  <hr>
+
+  <h2>Редактирование события</h2>
+  <ul>
+    {% for event in events %}
+      <li>
+        <h3>{{ event.title_event }}</h3>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input type="hidden" name="event_id" value="{{ event.id }}">
+          {{ form.as_p }}
+          <button type="submit" name="edit">Сохранить</button>
+        </form>
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="event_id" value="{{ event.id }}">
+          <button type="submit" name="delete">Удалить</button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+  </ul>
+</div>
+</body>
+</html>
+{% endblock %}

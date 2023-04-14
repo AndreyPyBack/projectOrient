@@ -1,0 +1,68 @@
+{% extends 'main/layout.html'%}
+{% load static %}
+{% block content %}
+<section>
+<div class="container">
+    <div class="card my-5">
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="{{ event_news.illustration_event.url }}"
+                             class="img-fluid mx-auto d-block w-100" alt="{{ event_news.title_event }}">
+                        <h1 class="mt-4">{{ event_news.title_event }}</h1>
+                        <p class="lead">{{ event_news.brief_announcement }}</p>
+                        <p><strong>Место проведения:</strong> {{ event_news.place_realization }}</p>
+                        <p><strong>Дата проведения:</strong> {{ event_news.date_event }}</p>
+                        {% for link in links %}
+                        <div class="card my-5">
+                            <div class="card-body">
+                                {{ link.title }}
+                                <a href="{{ link.url }}">{{link.url}}</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Комментарии</h5>
+                    {% for comment in comments %}
+                    <div class="media">
+                        <div class="media-body">
+                            <h6 class="mt-0">{{comment.author.castom.first_name}} {{comment.author.castom.last_name}}</h6>
+                            <p>{{comment.create_data}}</p>
+                            <p>{{comment.text}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="container my-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Оставьте комментарий</h5>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{form.as_p}}
+                            <div class="my-4">
+                                <button type="submit" class="btn btn-primary">Отправить</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

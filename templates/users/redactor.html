@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Личный кабинет редактора</h1>
+    <div class="row mt-4">
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-header">События</div>
+          <div class="card-body">
+            <p class="card-text">Управление событиями: создание, редактирование, удаление</p>
+            <a href="{% url 'event_editing' %}" class="btn btn-primary">Перейти</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-header">Обучение</div>
+          <div class="card-body">
+            <p class="card-text">Управление обучением: создание, редактирование, удаление</p>
+            <a href="{% url 'training_editing' %}" class="btn btn-primary">Перейти</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-header">Ссылки</div>
+          <div class="card-body">
+            <p class="card-text">Управление ссылками: создание, редактирование, удаление</p>
+            <a href="{% url 'links_editing' %}" class="btn btn-primary">Перейти</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-header">Комментарии</div>
+          <div class="card-body">
+            <p class="card-text">Управление комментариями: создание, редактирование, удаление</p>
+            <a href="{% url 'delete' %}" class="btn btn-primary">Перейти</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
