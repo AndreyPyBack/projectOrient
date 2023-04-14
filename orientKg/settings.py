@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-mgen_0$vjv^pseq%sn=(nve*b^c25@8wq$#1swrf-$k9!3k9@k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['orient.herokuapp.com',]
 
 
 # Application definition
