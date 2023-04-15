@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-mgen_0$vjv^pseq%sn=(nve*b^c25@8wq$#1swrf-$k9!3k9@k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['orient.herokuapp.com','127.0.0.1']
 
@@ -122,7 +122,7 @@ USE_TZ = True
 # settings.py
 
 # Указываем URL, по которому будут доступны статические файлы
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
 # Указываем путь к директории, в которую будут собраны статические файлы
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
