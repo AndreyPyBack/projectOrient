@@ -92,18 +92,20 @@ def creating_link(request):
 
 
 class EventEditor:
-    def create_event(self, date_event, slug, title_event, place_realization, illustration_event, brief_announcement,
+    def create_event(self,category, date_event, slug, title_event, place_realization, illustration_event, brief_announcement,
                      link_to_position):
-        event = Event.objects.create(date_event=date_event, slug=slug, title_event=title_event,
+        event = Event.objects.create(date_event=date_event,category=category, slug=slug, title_event=title_event,
                                      place_realization=place_realization, illustration_event=illustration_event,
                                      brief_announcement=brief_announcement, link_to_position=link_to_position)
         return event
 
-    def edit_event(self, event_id, date_event=None, slug=None, title_event=None, place_realization=None,
+    def edit_event(self, event_id, date_event=None,category=None, slug=None, title_event=None, place_realization=None,
                    illustration_event=None, brief_announcement=None, link_to_position=None):
         event = Event.objects.get(id=event_id)
         if date_event:
             event.date_event = date_event
+        if category:
+            event.category = category
         if slug:
             event.slug = slug
         if title_event:

@@ -1,7 +1,5 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from django.views.generic import DetailView
 from django.views.generic.edit import FormMixin
 
@@ -52,15 +50,6 @@ class EvenNews(FormMixin, DetailView):
         links = LinkEvent.objects.filter(event=event)
         context = self.get_context_data(comments=comments, links=links, form=form)
         return self.render_to_response(context)
-
-    # def get_object(self, queryset=None):
-    #     """Получение объекта события на основе слага в URL-адресе."""
-    #     if queryset is None:
-    #         queryset = self.get_queryset()
-    #     slug = self.kwargs.get(self.slug_url_kwarg)
-    #     queryset = queryset.filter(slug=slug)
-    #     obj = get_object_or_404(queryset)
-    #     return obj
 
 def event_list(request):
     events = Event.objects.all().order_by('-date_event')

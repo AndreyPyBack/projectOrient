@@ -4,15 +4,20 @@ from django.utils.text import slugify
 
 
 # Create your models here.
+class Category(models.Model):
+    name = models.CharField(max_length=64, verbose_name='название')
 
+    def __str__(self):
+        return self.name
 class Event(models.Model):
     date_event = models.DateTimeField('Дата проведения')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='категория',blank=True,null=True)
     slug = models.SlugField(max_length=100, unique=True,null=True)
     title_event = models.CharField('Заголовок события',max_length=255)
-    place_realization = models.CharField('Место проведения',max_length=255)
+    place_realization = models.CharField('Место проведения',max_length=255,blank=True)
     illustration_event = models.ImageField('Иллюстрация',upload_to='media/event/')
     brief_announcement = models.CharField('Краткое объявление',max_length=255)
-    link_to_position = models.URLField('Ссылка на положение')
+    link_to_position = models.URLField('Ссылка на положение',blank=True)
 
     class Meta:
         verbose_name = 'Событие'

@@ -5,12 +5,13 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from training.models import Training
 from event.models import Event
-
+from event.models import Category
 
 def main(request):
     now = timezone.now()
-    next_month = now + datetime.timedelta(days=35)
-    events = Event.objects.filter(date_event__gte=now, date_event__lte=next_month)
+    next_month = now + datetime.timedelta(days=7)
+    category_sport = Category.objects.get(name='Соревнования')
+    events = Event.objects.filter(category=category_sport,date_event__gte=now, date_event__lte=next_month)
     training_lessons = Training.objects.all()
     five_events = Event.objects.order_by('-date_event').all()[:5]
     event = Event.objects.order_by('-date_event').all()

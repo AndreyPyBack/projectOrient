@@ -66,10 +66,11 @@ class LinkEventForm(forms.ModelForm):
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['date_event','slug', 'title_event', 'place_realization', 'illustration_event', 'brief_announcement', 'link_to_position']
+        fields = ['date_event','category','slug', 'title_event', 'place_realization', 'illustration_event', 'brief_announcement', 'link_to_position']
 
         widgets = {
             'date_event': forms.TextInput(attrs={'class': 'form-control','type': 'datetime-local','id': "my-datetime",'name':"my-datetime"}),
+            'category':forms.Select(attrs={'class': 'form-input form-control','type': "text"}),
             'slug': forms.TextInput(attrs={'class': 'form-input form-control', 'type': "text"}),
             'title_event': forms.TextInput(attrs={'class': 'form-input form-control', 'type': "text"}),
             'place_realization': forms.TextInput(attrs={'class': 'form-input form-control', 'type': "text"}),
