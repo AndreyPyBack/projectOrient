@@ -2,83 +2,271 @@
 {% load static %}
 {% block content %}
     <section>
-      <div class="container my-5">
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-          <div class="col">
-            <div class="col d-flex align-items-center justify-content-center">
-                <img src="{% static 'main/img/logo.png' %}" class="img-thumbnail logotip" alt="..." height="50%" width="50%">
+<div class="container my-5">
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="col order-md-2">
+      <div class="card my-5">
+        <div class="card-body">
+          <h5 class="mb-1 text-center">Главные Новости</h5>
+          <div class="list-group">
+            {% for five in five_events %}
+            <a href="{% url 'main:ev' slug=five.slug %}" class="list-group-item list-group-item-action">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{five.title_event}}</h5>
+                <small>{{five.date_event}}</small>
               </div>
+              <p class="mb-1">{{five.brief_announcement}}</p>
+              <small></small>
+            </a>
+            {% endfor %}
           </div>
-          
-          <div class="col">
-            <div class="card my-5">
-              <div class="card-body">
-                <h5 class="mb-1 text-center">Главные Новости</h5>
-                <div class="list-group">
-                  {% for five in five_events %}
-                  <a href="{% url 'main:ev' slug=five.slug %}" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">{{five.title_event}}</h5>
-                      <small>{{five.date_event}}</small>
-                    </div>
-                    <p class="mb-1">{{five.brief_announcement}}</p>
-                    <small></small>
-                  </a>
-                  {% endfor %}
-                </div>
-              </div>
-            </div>
-          </div>
+        </div>
       </div>
-      <div class="container my-5">
-          <div class="row row-cols-1 row-cols-md-3 g-3">
-          <div class="col">
-            <div class="card mb-3" style="max-width: 540px; height: 100%;">
-              <div class="row g-0">
-                <div class="col-md-4">
-                  {% for i in events%}
-                  <img src="{{i.illustration_event.url}}" class="img-fluid " alt="..."  width="50%" height="100%">
-                </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 class="card-title">Предстоящие соревнования</h5>
-                        <p class="card-text">{{i.date_event}}</p>
-                        <p class="card-text"><small class="text-muted">{{i.title_event}}</small></p>
-                      <a href="{% url 'main:ev' slug=i.slug %}"><button type="button" class="btn btn-primary">Положение</button></a>
-                    {% endfor %}
-                  </div>
-                </div>
-              </div>
-            </div>
+    </div>
+
+    <div class="col order-md-1">
+      <div class="card my-5">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-start mb-3">
+            <img src="/static/main/img/logo.png" class="img-thumbnail logotip" alt="..." height="30%" width="30%">
+            <h3 class="text-center my-4">Вас приветствует Федерация спортивного ориентирования Кыргызстана!<br>
+              <span style="font-size: 14px;"><i class="fab fa-instagram fa-lg"></i> Наш инстаграм:
+            <a href="https://www.instagram.com/fso.kr/" target="_blank">@fso.kr</a>
+          </span>
+            </h3>
           </div>
-          <div class="col" id="calendar">
-            <div class="card" style="height: 100%;">
-              <div class="card-body">
-                <h5 class="card-title">Календарь соревнований</h5>
-                {% for i in events %}
-                <p class="card-text">Календарь соревнований - планирование событий и участников.</p>
-                {% endfor %}
-                <button type="button" class="btn btn-primary">Подробнее</button>
-              </div>
+          <p>Федерация ориентирования функционирует в Кыргызстане с 2010 года. Руководитель федерации Ильшат Скандерович
+            Даутов.
+            Мы проводим соревнования по спортивному ориентированию бегом, на лыжах и на велосипедах. Традиционные
+            мероприятия:
+          <ul>
+            <li>Чемпионат и первенство Кыргызстана</li>
+            <li>Чемпионат и первенство Бишкека</li>
+            <li>Кубок парков г. Бишкек</li>
+          <a href="media/file/plan2023.pdf" download>Скачать файл</a>
+
+          </ul>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <div class="container my-5">
+  {% if events %}
+  <div class="row row-cols-1 row-cols-md-4 g-3">
+    <div class="col">
+      <div class="card-deck">
+        {% for i in events %}
+        <div class="card mb-3" style="max-width: 540px; height: 100%;">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="{{i.illustration_event.url}}" class="img-fluid" alt="..." style="height: 100%; object-fit: cover;">
             </div>
-          </div>
-          <div class="col">
-            <div class="card"  style="height: 100%;">
+            <div class="col-md-8">
               <div class="card-body">
-                <h5 class="card-title">Архив</h5>
-                <p class="card-text">Хранилище информации о прошлых спортивных соревнованиях</p>
-                <a href="{% url 'event:archive'%}"><button type="button" class="btn btn-primary">Подробнее</button></a>
+                <h5 class="card-title mt-3">Предстоящие соревнования</h5>
+                <p class="card-text">{{i.date_event}}</p>
+                <p class="card-text mb-3"><small class="text-muted">{{i.title_event}}</small></p>
+                <a href="{% url 'main:ev' slug=i.slug %}"><button type="button" class="btn btn-primary">Положение</button></a>
               </div>
             </div>
           </div>
         </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-md-4" id="calendar">
+      <div class="card" style="height: 100%;">
+        <div class="card-body">
+          <h5 class="card-title">Календарь соревнований</h5>
+
+          <p class="card-text">Календарь соревнований - планирование событий и участников.</p>
+
+          <button type="button" class="btn btn-primary"><a href="media/file/plan2023.pdf" download>Скачать файл</a></button>
+          <a href="media/file/plan2023.pdf" download>Скачать файл</a>
         </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card" style="height: 100%;">
+        <div class="card-body">
+          <h5 class="card-title">Архив</h5>
+          <p class="card-text">Хранилище информации о прошлых спортивных соревнованиях</p>
+          <a href="{% url 'event:archive'%}"><button type="button" class="btn btn-primary">Подробнее</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="row row-cols-1 row-cols-md-2 g-3">
+    <div class="col-md-6" id="calendar">
+      <div class="card" style="height: 100%;">
+        <div class="card-body">
+          <h5 class="card-title">Календарь соревнований</h5>
+          {% for i in events %}
+          <p class="card-text">Календарь соревнований - планирование событий и участников.</p>
+          {% endfor %}
+         <a href="media/file/plan2023.pdf" download><button type="button" class="btn btn-primary">Скачать</button></a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card" style="height: 100%;">
+        <div class="card-body">
+          <h5 class="card-title">Архив</h5>
+          <p class="card-text">Хранилище информации о прошлых спортивных соревнованиях</p>
+          <a href="{% url 'event:archive'%}"><button type="button" class="btn btn-primary">Подробнее</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+<div class="container my-5">
+  {% if events %}
+    <div class="row row-cols-1 row-cols-md-4 g-3">
+      <div class="col">
+        <div class="card-deck">
+          {% for i in events %}
+          <div class="card mb-3" style="max-width: 540px; height: 100%;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="{{ i.illustration_event.url }}" class="img-fluid" alt="..." style="width=100%; object-fit: cover;">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title mt-3">Предстоящие соревнования</h5>
+                  <p class="card-text">{{ i.date_event }}</p>
+                  <p class="card-text mb-3"><small class="text-muted">{{ i.title_event }}</small></p>
+                  <a href="{% url 'main:ev' slug=i.slug %}" class="btn btn-primary">Положение</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-md-4" id="calendar">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Календарь соревнований</h5>
+            <p class="card-text">Календарь соревнований - планирование событий и участников.</p>
+            <a href="media/file/plan2023.pdf" download class="btn btn-primary">Скачать файл</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Архив</h5>
+            <p class="card-text">Хранилище информации о прошлых спортивных соревнованиях</p>
+            <a href="{% url 'event:archive' %}" class="btn btn-primary">Подробнее</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="row row-cols-1 row-cols-md-2 g-3">
+      <div class="col-md-6" id="calendar">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Календарь соревнований</h5>
+            {% for i in events %}
+            <p class="card-text">Календарь соревнований - планирование событий и участников.</p>
+            {% endfor %}
+            <a href="media/file/plan2023.pdf" download class="btn btn-primary">Скачать</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Архив</h5>
+            <p class="card-text">Хранилище информации о прошлых спортивных соревнованиях</p>
+            <a href="{% url 'event:archive' %}" class="btn btn-primary">Подробнее</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+<div class="container my-5">
+  {% if events %}
+    <div class="card-deck">
+      {% for i in events %}
+      <div class="card mb-3 d-flex" style="min-width: 0;">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <img src="{{ i.illustration_event.url }}" class="img-fluid" alt="..." style="height: 100%; object-fit: cover;">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body d-flex flex-column justify-content-between">
+              <h5 class="card-title mt-3">Предстоящие соревнования</h5>
+              <p class="card-text">{{ i.date_event }}</p>
+              <p class="card-text mb-3"><small class="text-muted">{{ i.title_event }}</small></p>
+              <a href="{% url 'main:ev' slug=i.slug %}" class="btn btn-primary mt-auto">Положение</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Календарь соревнований</h5>
+            <p class="card-text">Календарь соревнований - планирование событий и участников.</p>
+            <a href="media/file/plan2023.pdf" download class="btn btn-primary">Скачать файл</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Архив</h5>
+            <p class="card-text">Хранилище информации о прошлых спортивных соревнованиях</p>
+            <a href="{% url 'event:archive' %}" class="btn btn-primary">Подробнее</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="row">
+      <div class="col-md-6" id="calendar">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Календарь соревнований</h5>
+            {% for i in events %}
+            <p class="card-text">Календарь соревнований - планирование событий и участников.</p>
+            {% endfor %}
+            <a href="media/file/plan2023.pdf" download class="btn btn-primary">Скачать</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Архив</h5>
+            <p class="card-text">Хранилище информации о прошлых спортивных соревнованиях</p>
+            <a href="{% url 'event:archive' %}" class="btn btn-primary">Подробнее</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+
         <div class="container my-5" id="training">
           <div class="col-12">
             <div class="accordion accordion-flush" id="accordionFlushExample">
               <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingOne">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                     ОБУЧЕНИЕ ОРИЕНТИРОВАНИЮ
                   </button>
                 </h2>
@@ -163,41 +351,46 @@
 <!--            </div>-->
           </div>
         </div>
-        <div class="container" id="news">
-          <div class="text-center">
-            <h2>Новости</h2>
-            {% for i in page_obj %}
-          <div class="card text-center my-5">
-            <div class="card-header">
-              {{i.title_event}}
-            </div>
-            <div class="card-body">
-              <h5 class="card-title"><img src="{{i.illustration_event.url}}" alt="Logo" width="70%" height="50%" class="d-inline-block align-text-top"></h5>
-              <p class="card-text">{{i.brief_announcement}}</p>
-              <a href="{% url 'main:ev' slug=i.slug %}" class="btn btn-primary">Подробнее</a>
-            </div>
-            <div class="card-footer text-muted">
-              {{i.date_event}}
-            </div>
+          <div class="container" id="news">
+  <div>
+    <h2 class="text-center">Новости</h2>
+    {% for i in page_obj %}
+    <div class="card my-5 border-0">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="{{ i.illustration_event.url }}" alt="Logo" width="100%" class="d-inline-block align-text-top">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title text-center">{{ i.title_event }}</h5>
+            <p class="card-text">{{ i.brief_announcement }}</p>
+            <div class="text-center">
+  <a href="{% url 'main:ev' slug=i.slug %}" class="btn btn-primary text-center">Подробнее</a>
+</div>
           </div>
-            {% endfor %}
-            <div class="container">
-              <nav aria-label="Page navigation example">
-                <ul class="pagination d-flex justify-content-center">
-                    {% if page_obj.has_previous %}
-                    <li class="page-item"><a class="page-link" href="?page=1">&laquo;Первая</a></li>
-                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Первая</a></li>
-                     {% endif %}
-                  {% for p in page_obj.paginator.page_range %}
-                    <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
-                  {% endfor %}
-                    {% if page_obj.has_next %}
-                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a></li>
-                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Последняя&raquo;</a></li>
-                    {% endif %}
-                </ul>
-              </nav>
-            </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    <div class="container">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination d-flex justify-content-center">
+          {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page=1">&laquo;Первая</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Первая</a></li>
+          {% endif %}
+          {% for p in page_obj.paginator.page_range %}
+          <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+          {% endfor %}
+          {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Последняя&raquo;</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
     </section>
 <footer class="bg-dark text-white" id="contacts">
   <div class="container">
@@ -205,8 +398,7 @@
       <div class="col-md-4 col-sm-6 col-12 my-4">
         <h5>Контакты Федерации</h5>
         <p>Бишкек, ул. Медерова, 42, каб. 405</p>
-        <p>Президент Федерации спортивного ориентирования Кыргызской республики </p>
-        <p>Даутов Ильшат Скандерович fso_kg@mail.ru</p>
+        <p>Президент Федерации спортивного ориентирования Кыргызской республики <br>Даутов Ильшат Скандерович fso_kg@mail.ru</p>
       </div>
       <div class="col-md-4 col-sm-6 col-12 my-4">
         <h5>Ссылки</h5>
@@ -217,8 +409,7 @@
       </div>
       <div class="col-md-4 col-12 my-4">
         <h5>Контактное лицо для связи</h5>
-        <p>Светланов Константин Александрович</p>
-        <p>Эл. почта: kosvetlanov@gmail.com</p>
+        <p>Светланов Константин Александрович<br>Эл. почта: kosvetlanov@gmail.com</p>
       </div>
     </div>
     </form>

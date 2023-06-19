@@ -9,9 +9,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <img src="{{ event_news.illustration_event.url }}"
-                             class="img-fluid mx-auto d-block w-100" alt="{{ event_news.title_event }}">
+                             class="img-fluid mx-auto d-block w-55" alt="{{ event_news.title_event }}">
                         <h1 class="mt-4">{{ event_news.title_event }}</h1>
-                        <p class="lead">{{ event_news.brief_announcement }}</p>
+                        <p class="lead">{{ event_news.text_event }}</p>
                         <p><strong>Место проведения:</strong> {{ event_news.place_realization }}</p>
                         <p><strong>Дата проведения:</strong> {{ event_news.date_event }}</p>
                         {% for link in links %}
@@ -22,6 +22,14 @@
                             </div>
                         </div>
                         {% endfor %}
+{% for event_pdf in event_pdfs %}
+    <div class="card my-5">
+        <div class="card-body">
+            {{ event_pdf.title_file_pdf }}
+            <a href="{{ event_pdf.file_event_pdf.url }}" download>Скачать PDF</a>
+        </div>
+    </div>
+{% endfor %}
                     </div>
                 </div>
             </div>

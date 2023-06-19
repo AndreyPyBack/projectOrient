@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -92,24 +92,27 @@ def creating_link(request):
 
 
 class EventEditor:
-    def create_event(self,category, date_event, slug, title_event, place_realization, illustration_event, brief_announcement,
-                     link_to_position):
-        event = Event.objects.create(date_event=date_event,category=category, slug=slug, title_event=title_event,
-                                     place_realization=place_realization, illustration_event=illustration_event,
-                                     brief_announcement=brief_announcement, link_to_position=link_to_position)
+    def create_event(self, category, date_event, slug, title_event, text_event, place_realization,
+                     illustration_event, brief_announcement, link_to_position):
+        event = Event.objects.create(category=category, date_event=date_event, slug=slug, title_event=title_event,
+                                     text_event=text_event, place_realization=place_realization,
+                                     illustration_event=illustration_event, brief_announcement=brief_announcement,
+                                     link_to_position=link_to_position)
         return event
 
-    def edit_event(self, event_id, date_event=None,category=None, slug=None, title_event=None, place_realization=None,
-                   illustration_event=None, brief_announcement=None, link_to_position=None):
+    def edit_event(self, event_id, category=None, date_event=None, slug=None, title_event=None, text_event=None,
+                   place_realization=None, illustration_event=None, brief_announcement=None, link_to_position=None):
         event = Event.objects.get(id=event_id)
-        if date_event:
-            event.date_event = date_event
         if category:
             event.category = category
+        if date_event:
+            event.date_event = date_event
         if slug:
             event.slug = slug
         if title_event:
             event.title_event = title_event
+        if text_event:
+            event.text_event = text_event
         if place_realization:
             event.place_realization = place_realization
         if illustration_event:
@@ -144,11 +147,24 @@ def creating_events(request):
             event_editor.delete_event(event_id)
     else:
         form = EventForm()
-    if form is None:
-        form = EventForm()
     events = Event.objects.all()
     context = {'form': form, 'events': events}
     return render(request, 'users/creating_events.html', context)
+
+
+def edit_event(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+
+    if request.method == 'POST':
+        form = EventForm(request.POST, request.FILES, instance=event)
+        if form.is_valid():
+            form.save()
+            return redirect('event_editing')
+    else:
+        form = EventForm(instance=event)
+
+    context = {'form': form}
+    return render(request, 'users/edit_event.html', context)
 
 
 class TrainingEditor:
@@ -235,3 +251,16 @@ def creating_comments(request):
     comments = Comments.objects.all()
     context = {'comments': comments}
     return render(request, 'users/editing_comments.html', context)
+
+from django.shortcuts import render, redirect
+from .forms import EventFilePDFForm
+
+def create_event_file_pdf(request):
+    if request.method == 'POST':
+        form = EventFilePDFForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(request.path)
+    else:
+        form = EventFilePDFForm()
+    return render(request, 'users/create_event_file_pdf.html', {'form': form})

@@ -6,7 +6,7 @@ from django.forms import TextInput
 
 from event.models import Event
 
-from event.models import LinkEvent,Comments
+from event.models import LinkEvent,Comments,EventFilePDF
 
 from training.models import Training
 
@@ -66,18 +66,29 @@ class LinkEventForm(forms.ModelForm):
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['date_event','category','slug', 'title_event', 'place_realization', 'illustration_event', 'brief_announcement', 'link_to_position']
+        fields = ['date_event', 'category', 'slug', 'title_event','brief_announcement', 'text_event', 'place_realization',
+                  'illustration_event','link_to_position']
 
         widgets = {
-            'date_event': forms.TextInput(attrs={'class': 'form-control','type': 'datetime-local','id': "my-datetime",'name':"my-datetime"}),
-            'category':forms.Select(attrs={'class': 'form-input form-control','type': "text"}),
+            'date_event': forms.TextInput(attrs={'class': 'form-control', 'type': 'datetime-local', 'id': "my-datetime",
+                                                 'name': "my-datetime"}),
+            'category': forms.Select(attrs={'class': 'form-input form-control', 'type': "text"}),
             'slug': forms.TextInput(attrs={'class': 'form-input form-control', 'type': "text"}),
             'title_event': forms.TextInput(attrs={'class': 'form-input form-control', 'type': "text"}),
+            'brief_announcement': forms.TextInput(attrs={'class': 'form-input form-control', 'type': "text"}),
+            'text_event': forms.TextInput(attrs={'class': 'form-input form-control', 'type': "text" }),
             'place_realization': forms.TextInput(attrs={'class': 'form-input form-control', 'type': "text"}),
             'illustration_event': forms.FileInput(attrs={'class': 'form-input form-control'}),
-            'brief_announcement': forms.TextInput(attrs={'class': 'form-input form-control', 'type': "text"}),
             'link_to_position': forms.URLInput(attrs={'class': 'form-input form-control', 'type': "text"}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        instance = kwargs.get('instance')
+        if instance:
+            for field in self.fields:
+                self.fields[field].widget.attrs['value'] = getattr(instance, field)
+
 class CustomCaptchaWidget(TextInput):
     def __init__(self, attrs=None):
         default_attrs = {'class': ''}
@@ -126,3 +137,17 @@ class LoginUserForm(AuthenticationForm):
 
 
 
+class EventFilePDFForm(forms.ModelForm):
+    class Meta:
+        model = EventFilePDF
+        fields = ['event','title_file_pdf', 'file_event_pdf']
+        labels = {
+            'event':'Событие',
+            'title_file_pdf': 'Текст к файлу',
+            'file_event_pdf': 'Файлы',
+        }
+        widgets = {
+            'event': forms.Select(attrs={'class': 'form-control'}),
+            'title_file_pdf': forms.TextInput(attrs={'class': 'form-control'}),
+            'file_event_pdf': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }

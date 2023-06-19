@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.views.generic import DetailView
 from django.views.generic.edit import FormMixin
 
-from .models import Event, Comments, LinkEvent
+from .models import Event, Comments, LinkEvent,EventPDF,EventFilePDF
 from .forms import CommentForm
 
 
@@ -18,10 +18,12 @@ class EvenNews(FormMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         event = self.get_object()
+        event_pdfs = EventFilePDF.objects.filter(event=event)
         comments = Comments.objects.filter(event=event).order_by('-create_data')
         links = LinkEvent.objects.filter(event=event)
         context['comments'] = comments
         context['links'] = links
+        context['event_pdfs'] = event_pdfs
         return context
 
     def post(self, request, *args, **kwargs):

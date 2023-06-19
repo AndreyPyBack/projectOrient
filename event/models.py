@@ -15,6 +15,7 @@ class Event(models.Model):
     slug = models.SlugField(max_length=100, unique=True,null=True)
     title_event = models.CharField('Заголовок события',max_length=255)
     place_realization = models.CharField('Место проведения',max_length=255,blank=True)
+    text_event = models.TextField('Текст события',blank=True)
     illustration_event = models.ImageField('Иллюстрация',upload_to='media/event/')
     brief_announcement = models.CharField('Краткое объявление',max_length=255)
     link_to_position = models.URLField('Ссылка на положение',blank=True)
@@ -52,3 +53,32 @@ class LinkEvent(models.Model):
     class Meta:
         verbose_name = 'Ccылка'
         verbose_name_plural = 'Ссылки'
+
+
+class EventPDF(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE,related_name='event_file')
+    title_file = models.CharField('Событие', max_length=200)
+    file_event = models.ImageField('Файлы',upload_to='media/file/')
+
+
+    class Meta:
+        verbose_name = 'Файл'
+        verbose_name_plural = 'Файлы'
+
+class EventFilePDF(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE,related_name='event_file_pdf')
+    title_file_pdf = models.CharField('Событие', max_length=200)
+    file_event_pdf = models.FileField('Файлы',upload_to='media/file/')
+
+
+    class Meta:
+        verbose_name = 'Файл'
+        verbose_name_plural = 'Файлы'
+class EventImg(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE,related_name='event_img')
+    img_event = models.ImageField('Иллюстрация',upload_to='media/eventimg/')
+
+
+    class Meta:
+        verbose_name = 'Изображение'
+        verbose_name_plural = 'Изображения'

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-mgen_0$vjv^pseq%sn=(nve*b^c25@8wq$#1swrf-$k9!3k9@k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['orient.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'event',
     'users',
     'captcha',
+    'redactor',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -127,10 +128,10 @@ STATIC_URL = 'static/'
 # Указываем путь к директории, в которую будут собраны статические файлы
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Указываем дополнительные директории, в которых Django будет искать статические файлы
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'), # Пример пути к дополнительной директории со статическими файлами
+    os.path.join(BASE_DIR, 'static'),  # Путь к вашей директории со статическими файлами
 ]
+
 
 
 

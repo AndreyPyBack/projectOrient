@@ -10,10 +10,14 @@ from event.models import Category
 def main(request):
     now = timezone.now()
     next_month = now + datetime.timedelta(days=7)
+    two_weeks_from_now = now + datetime.timedelta(weeks=2)
     category_sport = Category.objects.get(name='Соревнования')
     events = Event.objects.filter(category=category_sport,date_event__gte=now, date_event__lte=next_month)
     training_lessons = Training.objects.all()
-    five_events = Event.objects.order_by('-date_event').all()[:5]
+    two_weeks_ago = now - datetime.timedelta(weeks=2)
+    two_weeks_from_now = now + datetime.timedelta(weeks=2)
+    five_events = Event.objects.filter(date_event__gte=two_weeks_ago, date_event__lte=two_weeks_from_now).order_by(
+        'date_event')[:5]
     event = Event.objects.order_by('-date_event').all()
     paginator = Paginator(event,10)
 
