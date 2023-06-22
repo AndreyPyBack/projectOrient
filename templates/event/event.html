@@ -11,8 +11,10 @@
                         <img src="{{ event_news.illustration_event.url }}"
                              class="img-fluid mx-auto d-block w-55" alt="{{ event_news.title_event }}">
                         <h1 class="mt-4">{{ event_news.title_event }}</h1>
-                        <p class="lead">{{ event_news.text_event }}</p>
-                        <p><strong>Место проведения:</strong> {{ event_news.place_realization }}</p>
+                        <p class="lead">{{ event_news.text_event|safe }}</p>
+                       {% if event_news.place_realization %}
+  <p><strong>Место проведения:</strong> {{ event_news.place_realization }}</p>
+{% endif %}
                         <p><strong>Дата проведения:</strong> {{ event_news.date_event }}</p>
                         {% for link in links %}
                         <div class="card my-5">

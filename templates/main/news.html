@@ -43,7 +43,6 @@
             <li>Чемпионат и первенство Кыргызстана</li>
             <li>Чемпионат и первенство Бишкека</li>
             <li>Кубок парков г. Бишкек</li>
-          <a href="media/file/plan2023.pdf" download>Скачать файл</a>
 
           </ul>
           </p>
@@ -51,148 +50,7 @@
       </div>
     </div>
   </div>
-</div>
-
-        <div class="container my-5">
-  {% if events %}
-  <div class="row row-cols-1 row-cols-md-4 g-3">
-    <div class="col">
-      <div class="card-deck">
-        {% for i in events %}
-        <div class="card mb-3" style="max-width: 540px; height: 100%;">
-          <div class="row g-0">
-            <div class="col-md-4">
-              <img src="{{i.illustration_event.url}}" class="img-fluid" alt="..." style="height: 100%; object-fit: cover;">
-            </div>
-            <div class="col-md-8">
-              <div class="card-body">
-                <h5 class="card-title mt-3">Предстоящие соревнования</h5>
-                <p class="card-text">{{i.date_event}}</p>
-                <p class="card-text mb-3"><small class="text-muted">{{i.title_event}}</small></p>
-                <a href="{% url 'main:ev' slug=i.slug %}"><button type="button" class="btn btn-primary">Положение</button></a>
-              </div>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-    <div class="col-md-4" id="calendar">
-      <div class="card" style="height: 100%;">
-        <div class="card-body">
-          <h5 class="card-title">Календарь соревнований</h5>
-
-          <p class="card-text">Календарь соревнований - планирование событий и участников.</p>
-
-          <button type="button" class="btn btn-primary"><a href="media/file/plan2023.pdf" download>Скачать файл</a></button>
-          <a href="media/file/plan2023.pdf" download>Скачать файл</a>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card" style="height: 100%;">
-        <div class="card-body">
-          <h5 class="card-title">Архив</h5>
-          <p class="card-text">Хранилище информации о прошлых спортивных соревнованиях</p>
-          <a href="{% url 'event:archive'%}"><button type="button" class="btn btn-primary">Подробнее</button></a>
-        </div>
-      </div>
-    </div>
-  </div>
-  {% else %}
-  <div class="row row-cols-1 row-cols-md-2 g-3">
-    <div class="col-md-6" id="calendar">
-      <div class="card" style="height: 100%;">
-        <div class="card-body">
-          <h5 class="card-title">Календарь соревнований</h5>
-          {% for i in events %}
-          <p class="card-text">Календарь соревнований - планирование событий и участников.</p>
-          {% endfor %}
-         <a href="media/file/plan2023.pdf" download><button type="button" class="btn btn-primary">Скачать</button></a>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="card" style="height: 100%;">
-        <div class="card-body">
-          <h5 class="card-title">Архив</h5>
-          <p class="card-text">Хранилище информации о прошлых спортивных соревнованиях</p>
-          <a href="{% url 'event:archive'%}"><button type="button" class="btn btn-primary">Подробнее</button></a>
-        </div>
-      </div>
-    </div>
-  </div>
-  {% endif %}
-</div>
-<div class="container my-5">
-  {% if events %}
-    <div class="row row-cols-1 row-cols-md-4 g-3">
-      <div class="col">
-        <div class="card-deck">
-          {% for i in events %}
-          <div class="card mb-3" style="max-width: 540px; height: 100%;">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img src="{{ i.illustration_event.url }}" class="img-fluid" alt="..." style="width=100%; object-fit: cover;">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title mt-3">Предстоящие соревнования</h5>
-                  <p class="card-text">{{ i.date_event }}</p>
-                  <p class="card-text mb-3"><small class="text-muted">{{ i.title_event }}</small></p>
-                  <a href="{% url 'main:ev' slug=i.slug %}" class="btn btn-primary">Положение</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-      <div class="col-md-4" id="calendar">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">Календарь соревнований</h5>
-            <p class="card-text">Календарь соревнований - планирование событий и участников.</p>
-            <a href="media/file/plan2023.pdf" download class="btn btn-primary">Скачать файл</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">Архив</h5>
-            <p class="card-text">Хранилище информации о прошлых спортивных соревнованиях</p>
-            <a href="{% url 'event:archive' %}" class="btn btn-primary">Подробнее</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  {% else %}
-    <div class="row row-cols-1 row-cols-md-2 g-3">
-      <div class="col-md-6" id="calendar">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">Календарь соревнований</h5>
-            {% for i in events %}
-            <p class="card-text">Календарь соревнований - планирование событий и участников.</p>
-            {% endfor %}
-            <a href="media/file/plan2023.pdf" download class="btn btn-primary">Скачать</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">Архив</h5>
-            <p class="card-text">Хранилище информации о прошлых спортивных соревнованиях</p>
-            <a href="{% url 'event:archive' %}" class="btn btn-primary">Подробнее</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  {% endif %}
-</div>
-<div class="container my-5">
+</div><div class="container my-5">
   {% if events %}
     <div class="card-deck">
       {% for i in events %}
@@ -258,8 +116,6 @@
     </div>
   {% endif %}
 </div>
-
-
         <div class="container my-5" id="training">
           <div class="col-12">
             <div class="accordion accordion-flush" id="accordionFlushExample">
