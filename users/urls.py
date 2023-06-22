@@ -10,4 +10,5 @@ urlpatterns = [
     path('training_editing/',views.creating_training,name='training_editing'),
     path('delete_comments/',views.creating_comments,name='delete'),
     path('create_event_file_pdf/',views.create_event_file_pdf, name='create_event_file_pdf'),
+
 ]

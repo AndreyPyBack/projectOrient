@@ -27,7 +27,8 @@ urlpatterns = [
     path('',include('main.urls')),
     path('captcha', include('captcha.urls')),
     path('archive/',include('event.urls')),
-    path('reg',include('users.urls'))
+    path('reg',include('users.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

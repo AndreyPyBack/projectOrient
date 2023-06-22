@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django import forms
 from captcha.fields import CaptchaField
 from django.forms import TextInput
+from ckeditor.widgets import CKEditorWidget
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 from event.models import Event
 
@@ -64,6 +66,8 @@ class LinkEventForm(forms.ModelForm):
                                                                             'type': "text"}),
         }
 class EventForm(forms.ModelForm):
+    text_event = forms.CharField(widget=CKEditorUploadingWidget())
+
     class Meta:
         model = Event
         fields = ['date_event', 'category', 'slug', 'title_event','brief_announcement', 'text_event', 'place_realization',
@@ -76,7 +80,7 @@ class EventForm(forms.ModelForm):
             'slug': forms.TextInput(attrs={'class': 'form-input form-control', 'type': "text"}),
             'title_event': forms.TextInput(attrs={'class': 'form-input form-control', 'type': "text"}),
             'brief_announcement': forms.TextInput(attrs={'class': 'form-input form-control', 'type': "text"}),
-            'text_event': forms.TextInput(attrs={'class': 'form-input form-control', 'type': "text" }),
+
             'place_realization': forms.TextInput(attrs={'class': 'form-input form-control', 'type': "text"}),
             'illustration_event': forms.FileInput(attrs={'class': 'form-input form-control'}),
             'link_to_position': forms.URLInput(attrs={'class': 'form-input form-control', 'type': "text"}),

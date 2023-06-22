@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from training.models import Training
 from event.models import Event
-from event.models import Category
+from event.models import Category ,EventFilePDF
 
 def main(request):
     now = timezone.now()
@@ -37,3 +37,18 @@ def main(request):
 def logout_user(request):
     logout(request)
     return redirect('main:main')
+
+
+def document(request):
+    category_doc = Category.objects.get(name='Документы')
+    doc = EventFilePDF.objects.filter(category=category_doc)
+    return render(request,'main/doc.html',doc)
+
+from django.contrib.auth.models import Group
+
+def group_check(request):
+    if request.user.is_authenticated:
+        is_redactor = Group.objects.filter(name='Redactor', user=request.user).exists()
+    else:
+        is_redactor = False
+    return {'is_redactor': is_redactor}
