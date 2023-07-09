@@ -5,12 +5,15 @@ from django.views.generic import CreateView
 from .forms import RegisterUserForm, LoginUserForm, EventForm, LinkEventForm, TrainingForm
 from .models import Castom
 from event.models import Event
-
 from event.models import LinkEvent
-
 from training.models import Training
-
 from event.models import Comments
+from training.models import Document
+from django.shortcuts import render, redirect
+from .forms import DocumentForm
+from django.shortcuts import render, redirect
+from .forms import EventFilePDFForm
+from django.shortcuts import get_object_or_404
 
 
 class RegisterUser(CreateView):
@@ -231,6 +234,20 @@ def creating_training(request):
     context = {'form': form, 'trainings': trainings}
     return render(request, 'users/creating_learning.html', context)
 
+def edit_training(request, training_id):
+    event = get_object_or_404(Training, id=training_id)
+
+    if request.method == 'POST':
+        form = TrainingForm(request.POST, request.FILES, instance=event)
+        if form.is_valid():
+            form.save()
+            return redirect('training_editing')
+    else:
+        form = TrainingForm(instance=event)
+
+    context = {'form': form}
+    return render(request, 'users/edit_training.html', context)
+
 
 class CommentEditor:
 
@@ -252,8 +269,6 @@ def creating_comments(request):
     context = {'comments': comments}
     return render(request, 'users/editing_comments.html', context)
 
-from django.shortcuts import render, redirect
-from .forms import EventFilePDFForm
 
 def create_event_file_pdf(request):
     if request.method == 'POST':
@@ -264,3 +279,26 @@ def create_event_file_pdf(request):
     else:
         form = EventFilePDFForm()
     return render(request, 'users/create_event_file_pdf.html', {'form': form})
+
+def delete_document(request, document_id):
+    document = get_object_or_404(Document, id=document_id)
+    if request.method == 'POST':
+        document.delete()
+        return redirect('creating_doc')
+
+    context = {'document': document}
+    return render(request, 'users/delete_document.html', context)
+
+def upload_document(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('creating_doc')
+    else:
+        form = DocumentForm()
+    documents = Document.objects.all()
+    context = {'form': form,'documents':documents}
+    return render(request, 'users/upload_document.html', context)
+
+

@@ -1,33 +1,30 @@
-{% extends 'users/base_page.html'%}
+{% extends 'users/base_page.html' %}
+{% load static %}
+
 {% block content %}
+<html>
 <body>
 <div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <h2>Создание события</h2>
   <form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" name="create">Создать</button>
-</form>
-<hr class="my-5">
-<h2>Редактирование события</h2>
-  <ul>
-    {% for t in trainings %}
-      <li>
-        <h3>{{ t.training_title }}</h3>
-        <form method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          <input type="hidden" name="training_id" value="{{ t.id }}">
-          {{ form.as_p }}
-          <button type="submit" name="edit">Сохранить</button>
-        </form>
-        <form method="post">
-          {% csrf_token %}
-          <input type="hidden" name="training_id" value="{{ t.id }}">
-          <button type="submit" name="delete">Удалить</button>
-        </form>
-      </li>
-    {% endfor %}
-  </ul>
-  </ul>
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ form.media }}
+    <button type="submit" name="create">Создать</button>
+  </form>
+    </div>
+    <div class="col-md-4">
+      <ul>
+      {% for event in trainings %}
+        <li>
+          <p><a href="{% url 'delete_document' event.id %}">{{ event.training_title }}</a></p>
+        </li>
+      {% endfor %}
+    </ul>
+    </div>
+  </div>
 </div>
 </body>
 </html>

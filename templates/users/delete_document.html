@@ -1,0 +1,12 @@
+{% extends 'users/base_page.html' %}
+{% load static %}
+
+{% block content %}
+ <div>
+    <p>Название документа: {{ document.name }}</p>
+  </div>
+  <form method="POST" action="{% url 'delete_document' document.id %}">
+    {% csrf_token %}
+    <button type="submit">Удалить</button>
+  </form>
+{% endblock %}

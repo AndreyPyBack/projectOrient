@@ -16,7 +16,7 @@
 						Your browser does not support the video tag.
 					</video>
 				{% endif %}
-				<p class="card-text">{{ orientation_training.full_training }}</p>
+				<p class="card-text">{{ orientation_training.full_training|safe }}</p>
 				{% if orientation_training.links_training %}
 					<a href="{{ orientation_training.links_training }}" class="card-link">Links Training</a>
 				{% endif %}

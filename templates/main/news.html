@@ -176,11 +176,12 @@
                 </h2>
                 <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
                   <div class="accordion-body">
-                    {% for i in training_lessons%}
-                    {% if i.category == 'Нормативные документы' %}
-                        <p><a href="{% url 'main:tra' slug=i.slug %}">{{i.training_title}}</a></p>
-                    {% endif %}
-                    {% endfor %}
+                    {% for document in doc %}
+      <li class="list-inline-item">
+        <a href="{{ document.file_url }}" download>{{ document.title }}</a>
+      </li>
+    {% endfor %}
+
                   </div>
                 </div>
               </div>

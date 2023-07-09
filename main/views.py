@@ -1,4 +1,6 @@
 import datetime
+import os
+
 from django.utils import timezone
 from django.contrib.auth import logout
 from django.core.paginator import Paginator
@@ -6,8 +8,15 @@ from django.shortcuts import render, redirect
 from training.models import Training
 from event.models import Event
 from event.models import Category ,EventFilePDF
+from training.models import Document
 
 def main(request):
+    doc = Document.objects.all()
+    for document in doc:
+        file_url = document.file.url  # Получение URL-адреса файла
+        title = document.name  # Получение заголовка документа из поля name
+        document.file_url = file_url  # Добавление URL-адреса файла в объект документа
+        document.title = title
     now = timezone.now()
     next_month = now + datetime.timedelta(days=7)
     two_weeks_from_now = now + datetime.timedelta(weeks=2)
@@ -30,6 +39,7 @@ def main(request):
         'events':events,
         'next_month':next_month,
         'five_events':five_events,
+        'doc':doc,
 
     })
 
@@ -39,10 +49,7 @@ def logout_user(request):
     return redirect('main:main')
 
 
-def document(request):
-    category_doc = Category.objects.get(name='Документы')
-    doc = EventFilePDF.objects.filter(category=category_doc)
-    return render(request,'main/doc.html',doc)
+
 
 from django.contrib.auth.models import Group
 

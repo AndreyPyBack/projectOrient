@@ -12,6 +12,8 @@ from event.models import LinkEvent,Comments,EventFilePDF
 
 from training.models import Training
 
+from training.models import Document
+
 
 from django import forms
 # from .models import Comments
@@ -29,6 +31,7 @@ class CommentFormRedactor(forms.ModelForm):
         }
 
 class TrainingForm(forms.ModelForm):
+    full_training = forms.CharField(widget=CKEditorUploadingWidget())
     class Meta:
         model = Training
         fields = ['date_of_publication', 'slug', 'category', 'training_title', 'summary_training', 'full_training', 'links_training', 'video_training', 'graphic_illustrations']
@@ -49,11 +52,15 @@ class TrainingForm(forms.ModelForm):
             'category': forms.TextInput(attrs={'class': 'form-input form-control','type': "text"}),
             'training_title': forms.TextInput(attrs={'class': 'form-input form-control','type': "text"}),
             'summary_training': forms.TextInput(attrs={'class': 'form-input form-control','type': "text"}),
-            'full_training': forms.Textarea(attrs={'class': 'form-input form-control','type': "text"}),
             'links_training': forms.URLInput(attrs={'class': 'form-control'}),
             'video_training': forms.FileInput(attrs={'class': 'form-control'}),
             'graphic_illustrations': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].widget = forms.Select(choices=Training.CATEGORY_CHOICES)
+
 class LinkEventForm(forms.ModelForm):
     class Meta:
         model = LinkEvent
@@ -155,3 +162,8 @@ class EventFilePDFForm(forms.ModelForm):
             'title_file_pdf': forms.TextInput(attrs={'class': 'form-control'}),
             'file_event_pdf': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
+
+class DocumentForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ('name', 'file')
